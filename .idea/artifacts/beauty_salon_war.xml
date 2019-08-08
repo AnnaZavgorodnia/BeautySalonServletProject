@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="beauty-salon:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>beauty-salon</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="beauty-salon-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="beauty-salon:war exploded" />
+    </root>
+  </artifact>
+</component>
