@@ -31,7 +31,7 @@
                 </div>
                 <div class="input-field">
                     <select id="select-service">
-                        <option value="" disabled selected>Choose your option</option>
+                        <option value="" disabled selected>Choose service</option>
                         <c:forEach items="${master.services}" var="i">
                             <option value="${i.id}"
                                     id="${i.name}"
