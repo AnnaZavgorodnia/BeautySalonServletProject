@@ -193,9 +193,10 @@ nav{
 
 .nav__drop__menu li {
     color: #fff;
+    cursor: pointer;
 }
 
-.nav__drop__menu li:hover > a {
+.nav__drop__menu li:hover > a,span {
     color: #fce38a;
 }
 

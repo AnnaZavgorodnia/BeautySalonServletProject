@@ -73,12 +73,12 @@
                                 <span class="nav__sublink"><fmt:message key="header.menu.lang"/></span>
                         <ul class="nav__drop__menu">
                             <li>
-                                <a class="nav__menu__content"
-                                   href="?lang=ua"><fmt:message key="header.menu.language.ua"/></a>
+                                <span id="lang_ua" class="nav__menu__content"
+                                   ><fmt:message key="header.menu.language.ua"/></span>
                             </li>
                             <li>
-                                <a class="nav__menu__content"
-                                   href="?lang=en"><fmt:message key="header.menu.language.en"/></a>
+                                <span id="lang_en" class="nav__menu__content"
+                                   ><fmt:message key="header.menu.language.en"/></span>
                             </li>
                         </ul>
                     </li>

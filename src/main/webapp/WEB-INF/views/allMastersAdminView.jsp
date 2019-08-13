@@ -26,7 +26,10 @@
                 <c:forEach var="i" items="${masters}">
                     <li class="collection-item avatar">
                         <img src="${pageContext.request.contextPath}/masters/${i.imagePath}" alt="" class="circle">
-                        <span class="title">${i.fullName}</span>
+                        <span class="title">
+                            <c:if test="${lang eq 'en'}">${i.fullName}</c:if>
+                            <c:if test="${lang eq 'ua'}">${i.fullNameUa}</c:if>
+                        </span>
                         <p>${i.position}</p>
                         <a href="#" class="secondary-content"><i class="fas fa-user-edit"></i></a>
                     </li>
@@ -37,5 +40,6 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>

@@ -74,6 +74,8 @@ public class JDBCMasterDao implements MasterDao {
                     insertMasterPs.setString(2,entity.getInstagram());
                     insertMasterPs.setString(3,entity.getPosition().name());
                     insertMasterPs.setString(4,entity.getImagePath());
+                    System.out.println(entity.getFullNameUa());
+                    insertMasterPs.setString(5, entity.getFullNameUa());
                     
                     insertMasterPs.executeUpdate();
 

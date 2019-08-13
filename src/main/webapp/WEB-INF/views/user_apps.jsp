@@ -29,8 +29,16 @@
                             <h5>${i.appDate} ${i.appTime}</h5>
                         </div>
                         <div class="card-body">
-                            <p class="card-text"><fmt:message key="master.title"/>: ${i.master.fullName}</p>
-                            <p class="card-text"><fmt:message key="service.title"/>: ${i.service.name}</p>
+                            <p class="card-text">
+                                <fmt:message key="master.title"/>:
+                                <c:if test="${lang eq 'en'}">${i.master.fullName}</c:if>
+                                <c:if test="${lang eq 'ua'}">${i.master.fullNameUa}</c:if>
+                            </p>
+                            <p class="card-text">
+                                <fmt:message key="service.title"/>:
+                                <c:if test="${lang eq 'en'}">${i.service.name}</c:if>
+                                <c:if test="${lang eq 'ua'}">${i.service.nameUa}</c:if>
+                            </p>
                             <p class="card-text"><fmt:message key="price.title"/>: ${i.service.price}</p>
                             <a href="${pageContext.request.contextPath}/app/me/appointments/delete?appId=${i.id}"
                                class="btn btn-danger">
@@ -42,5 +50,7 @@
             </div>
         </div>
     </section>
+
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>

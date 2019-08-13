@@ -29,6 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js" integrity="sha256-FT1eN+60LmWX0J8P25UuTjEEE0ZYvpC07nnU6oFKFuI=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.js" integrity="sha256-L9T+qE3Ms6Rsuxl+KwLST6a3R/2o6m33zB5mR2KyPjU=" crossorigin="anonymous"></script>
     <script src="${pageContext.request.contextPath}/js/all_apps.js"></script>
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>
 

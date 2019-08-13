@@ -31,7 +31,10 @@
                             <img src="${pageContext.request.contextPath}/masters/${i.imagePath}" />
                         </div>
                         <div class="about__text">
-                            <h4>${i.fullName}</h4>
+                            <h4>
+                                <c:if test="${lang eq 'en'}">${i.fullName}</c:if>
+                                <c:if test="${lang eq 'ua'}">${i.fullNameUa}</c:if>
+                            </h4>
                             <a href="https://www.instagram.com/${i.instagram}/">
                                 <i class="fab fa-instagram"></i>
                             </a>
@@ -44,5 +47,7 @@
             </div>
         </div>
     </section>
+
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>

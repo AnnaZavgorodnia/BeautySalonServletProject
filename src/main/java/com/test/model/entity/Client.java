@@ -3,11 +3,10 @@ package com.test.model.entity;
 import java.util.List;
 
 public class Client extends User {
+
     private List<Appointment> appointments;
 
-    public Client(){
-
-    }
+    public Client(){}
 
     public Client(List<Appointment> appointments) {
         this.appointments = appointments;
@@ -25,4 +24,5 @@ public class Client extends User {
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
     }
+
 }

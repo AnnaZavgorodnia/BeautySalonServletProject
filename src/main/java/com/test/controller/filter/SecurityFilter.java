@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class SecurityFilter implements Filter {
+
     public SecurityFilter() {
     }
 

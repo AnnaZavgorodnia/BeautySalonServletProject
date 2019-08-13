@@ -50,7 +50,7 @@
                        placeholder="<fmt:message key="registration.page.first.name.placeholder"/>"
                        required>
                 <c:if test="${not empty firstNameError}">
-                    <label style="color: cornflowerblue"><fmt:message key="registration.page.first.name.error"/></label>
+                    <label style="color: cornflowerblue"><fmt:message key="registration.page.first.name.user.error"/></label>
                     <br>
                 </c:if>
                 <label id="lastNameLabel"
@@ -65,7 +65,7 @@
                        placeholder="<fmt:message key="registration.page.last.name.placeholder"/>"
                        required>
                 <c:if test="${not empty lastNameError}">
-                    <label style="color: cornflowerblue"><fmt:message key="registration.page.last.name.error"/></label>
+                    <label style="color: cornflowerblue"><fmt:message key="registration.page.last.name.user.error"/></label>
                     <br>
                 </c:if>
                 <label id="emailLabel"
@@ -105,6 +105,8 @@
             </form>
         </div>
     </div>
+
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 
 </body>
 </html>

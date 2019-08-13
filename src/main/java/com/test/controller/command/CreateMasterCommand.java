@@ -38,6 +38,8 @@ public class CreateMasterCommand implements Command {
         String username = request.getParameter("username");
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
+        String firstNameUa = request.getParameter("firstNameUa");
+        String lastNameUa = request.getParameter("lastNameUa");
         String password = request.getParameter("password");
         String instagram = request.getParameter("instagram");
         String email = request.getParameter("email");
@@ -48,6 +50,7 @@ public class CreateMasterCommand implements Command {
         List<String> roleNames = Stream.of(Position.values())
                 .map(Position::name)
                 .collect(Collectors.toList());
+
         request.setAttribute("positions", roleNames);
         request.setAttribute("services", servicesService.findAll());
 
@@ -67,12 +70,12 @@ public class CreateMasterCommand implements Command {
         }
 
 
-        if(!RegistrationUtils.checkIfValid(
+        if(!RegistrationUtils.checkIfValidMaster(
                 request, username, firstName, lastName,
-                email, password, instagram) || filePart == null){
+                email, password, instagram, firstNameUa, lastNameUa) || filePart == null){
 
-            RegistrationUtils.setUserAttributes(request, username, firstName,
-                    lastName, email, password, instagram);
+            RegistrationUtils.setMasterAttributes(request, username, firstName,
+                    lastName, email, password, instagram, firstNameUa, lastNameUa);
 
             return "/WEB-INF/views/createMasterView.jsp";
 
@@ -83,6 +86,7 @@ public class CreateMasterCommand implements Command {
         Master master = new Master();
         master.setUsername(username);
         master.setFullName(firstName+" "+lastName);
+        master.setFullNameUa(firstNameUa + " " + lastNameUa);
         master.setPassword(SecurityUtils.getHashedPassword(password));
         master.setRole(Role.MASTER);
         master.setEmail(email);
@@ -101,8 +105,8 @@ public class CreateMasterCommand implements Command {
             masterService.create(master);
         } catch (UserAlreadyExistsException e){
             request.setAttribute("userExistsError"," ");
-            RegistrationUtils.setUserAttributes(request, username, firstName,
-                    lastName, email, password, instagram);
+            RegistrationUtils.setMasterAttributes(request, username, firstName,
+                    lastName, email, password, instagram, firstNameUa, lastNameUa);
             return "/WEB-INF/views/createMasterView.jsp";
         }
 

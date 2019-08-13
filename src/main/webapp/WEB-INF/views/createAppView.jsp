@@ -31,19 +31,23 @@
                 </div>
                 <div class="input-field">
                     <select id="select-service">
-                        <option value="" disabled selected>Choose service</option>
+                        <option value="" disabled selected><fmt:message key="create.appointment.choose.option.title"/></option>
                         <c:forEach items="${master.services}" var="i">
-                            <option value="${i.id}"
-                                    id="${i.name}"
-                                    data-price="${i.price}">${i.name}</option>
+                            <c:if test="${lang eq 'en'}">
+                                <option value="${i.id}"
+                                        id="${i.name}"
+                                        data-price="${i.price}">${i.name}</option>
+                            </c:if>
+                            <c:if test="${lang eq 'ua'}">
+                                <option value="${i.id}"
+                                        id="${i.nameUa}"
+                                        data-price="${i.price}">${i.nameUa}</option>
+                            </c:if>
                         </c:forEach>
                     </select>
                     <label for="select-service" id="select_label">
-                        <fmt:message key="create.appointment.service.title"/>
+                        <fmt:message key="create.appointment.choose.option.title"/>...
                     </label>
-                    <h5 id="price"></h5>
-                    <h5 id="app_date"></h5>
-                    <h5 id="time"></h5>
                 </div>
                 <div class="create__app__time__date">
                     <label for="date">
@@ -61,11 +65,15 @@
         <div class="modal-content">
             <div class="row">
                 <div class="col s6" style="font-size: 20px">
-                    <p id="master-modal">Master: ${master.fullName}</p>
-                    <p id="service-modal"></p>
-                    <p id="price-modal"></p>
-                    <p id="date-modal"></p>
-                    <p id="time-modal"></p>
+                    <p id="master-modal">
+                        <fmt:message key="master.title"/>:
+                        <c:if test="${lang eq 'en'}">${master.fullName}</c:if>
+                        <c:if test="${lang eq 'ua'}">${master.fullNameUa}</c:if>
+                    </p>
+                    <p><fmt:message key="create.appointment.service.title"/>: <span id="service-modal"></span></p>
+                    <p><fmt:message key="create.appointment.price.title"/>: <span id="price-modal"></span></p>
+                    <p><fmt:message key="create.appointment.date.title"/>: <span id="date-modal"></span></p>
+                    <p><fmt:message key="create.appointment.time.title"/>: <span id="time-modal"></span></p>
                 </div>
                 <div class="col s6 center-align">
                     <img style="width: 60%" src="${pageContext.request.contextPath}/masters/${master.imagePath}">
@@ -79,6 +87,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/create_app.js"></script>
+    <script src="${pageContext.request.contextPath}/js/book_app.js"></script>
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>

@@ -8,13 +8,13 @@
 </head>
 <body>
 
-<jsp:include page="_menu.jsp"></jsp:include>
+    <jsp:include page="_menu.jsp"></jsp:include>
 
-<h3>Hello: ${loginedUser.username}</h3>
+    <h3>Hello: ${loginedUser.username}</h3>
 
-User Name: <b>${loginedUser.username}</b>
-<br />
+    User Name: <b>${loginedUser.username}</b>
+    <br />
 
-
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>

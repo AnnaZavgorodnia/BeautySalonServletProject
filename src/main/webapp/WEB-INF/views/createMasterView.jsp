@@ -39,9 +39,9 @@
                                            value="${firstName}"
                                     </c:if>
                                    required>
-                            <label for="firstName"><fmt:message key="registration.page.first.name"/></label>
+                            <label for="firstName"><fmt:message key="registration.page.first.name.en"/></label>
                             <c:if test="${not empty firstNameError}">
-                                <span class="helper-text" style="color: darkred"><fmt:message key="registration.page.first.name.error"/></span>
+                                <span class="helper-text" style="color: darkred"><fmt:message key="registration.page.first.name.en.master.error"/></span>
                             </c:if>
                         </div>
                         <div class="input-field col s6">
@@ -53,9 +53,39 @@
                                            value="${lastName}"
                                     </c:if>
                                    required>
-                            <label for="lastName"><fmt:message key="registration.page.last.name"/></label>
+                            <label for="lastName"><fmt:message key="registration.page.last.name.en"/></label>
                             <c:if test="${not empty lastNameError}">
-                                <span class="helper-text" style="color: darkred"><fmt:message key="registration.page.last.name.error"/></span>
+                                <span class="helper-text" style="color: darkred"><fmt:message key="registration.page.last.name.en.master.error"/></span>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input name="firstNameUa"
+                                   id="firstNameUa"
+                                   type="text"
+                                   class="validate"
+                            <c:if test="${not empty firstNameUa}">
+                                   value="${firstNameUa}"
+                            </c:if>
+                                   required>
+                            <label for="firstNameUa"><fmt:message key="registration.page.first.name.ua"/></label>
+                            <c:if test="${not empty firstNameUaError}">
+                                <span class="helper-text" style="color: darkred"><fmt:message key="registration.page.first.name.ua.master.error"/></span>
+                            </c:if>
+                        </div>
+                        <div class="input-field col s6">
+                            <input name="lastNameUa"
+                                   id="lastNameUa"
+                                   type="text"
+                                   class="validate"
+                            <c:if test="${not empty lastNameUa}">
+                                   value="${lastNameUa}"
+                            </c:if>
+                                   required>
+                            <label for="lastNameUa"><fmt:message key="registration.page.last.name.ua"/></label>
+                            <c:if test="${not empty lastNameUaError}">
+                                <span class="helper-text" style="color: darkred"><fmt:message key="registration.page.last.name.ua.master.error"/></span>
                             </c:if>
                         </div>
                     </div>
@@ -134,7 +164,12 @@
                         <div class="input-field col s6">
                             <select id="service-select" name="services" multiple class="validate" required>
                                 <c:forEach items="${services}" var="i">
-                                    <option value="${i.id}" selected>${i.name}</option>
+                                    <c:if test="${lang eq 'en'}">
+                                        <option value="${i.id}" selected>${i.name}</option>
+                                    </c:if>
+                                    <c:if test="${lang eq 'ua'}">
+                                        <option value="${i.id}" selected>${i.nameUa}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                             <label><fmt:message key="create.master.service.label"/></label>
@@ -161,5 +196,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/create_master.js"></script>
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>

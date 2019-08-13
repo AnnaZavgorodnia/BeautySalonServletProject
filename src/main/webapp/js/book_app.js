@@ -5,15 +5,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let elems = document.querySelectorAll('select');
     let instances = M.FormSelect.init(elems,{});
 
-    var elems_modal = document.querySelectorAll('modal');
-    var instances_modal = M.Modal.init(elems_modal,{});
+    var elems_modal = document.querySelectorAll('.modal');
+    var instances_modal = M.Modal.init(elems_modal,{startingTop: "4%",endingTop: "30%"});
 
     document.getElementById("select-service").addEventListener("change",function(e){
         console.log(e.target);
         let inp = document.getElementById('select-service').M_FormSelect.input.value;
         console.log(inp);
+        document.getElementById("service-modal").innerHTML = inp;
         let val = document.getElementById(inp);
-        document.getElementById("price").innerHTML = "Price: " + val.dataset.price;
+        document.getElementById("price-modal").innerHTML = val.dataset.price + "UAH";
         document.getElementById("select_label").style.color = "black";
     });
 
@@ -33,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
             maxDate: date.addDays(14),
             onClose: ondraw
         });
+
+
+    document.getElementById("button-book").addEventListener("click", makeApp);
 });
 
 async function getApps(id,date) {
@@ -48,8 +52,6 @@ const ondraw = async function fullTime(){
 
     let date = new Date(instance.date);
     date.setHours(date.getHours()+3);
-
-    document.getElementById("app_date").innerHTML = "Date: " + date.toDateString();
 
     let master_id = document.getElementById("master_id").value;
 
@@ -69,11 +71,11 @@ function createSchedule(time, data){
     title.innerHTML = time;
     let btn = document.createElement("button");
     btn.addEventListener("click", fullModal);
+    //todo
     btn.innerHTML = "book";
-    btn.setAttribute("class","btn-black btn-active");
+    btn.setAttribute("class","btn-black btn-active modal-trigger");
     btn.setAttribute("id",time);
     btn.dataset.time = time;
-    btn.dataset.target = "modal";
     data.forEach(el => {
         if(el.appTime.hour-3 === 9)
             datetext = "09";
@@ -95,52 +97,65 @@ function clearTime(){
     document.getElementById("time-table").innerHTML = "";
 }
 
-function setTime(e){
-    document.getElementById("time").innerHTML = "Time: " +
-        e.target.dataset.time;
-}
-
 function fullModal(e) {
+    let serviceName = document.getElementById('select-service').M_FormSelect.input.value;
+    let serviceElement = document.getElementById(serviceName);
+    if(serviceElement == null){
+        console.log(true);
+        document.getElementById("select_label").style.color = "red";
 
+    } else{
+
+        let someDate = document.getElementsByClassName('datepicker')[0];
+        let instance = M.Datepicker.getInstance(someDate);
+        let idate = instance.date;
+
+        let finalDate = new Date(idate.getFullYear(),
+            idate.getMonth(),
+            idate.getDate(),
+            e.target.dataset.time.substring(0,2));
+        console.log(finalDate);
+        finalDate.setHours(finalDate.getHours()+3);
+        let appDate = finalDate.toISOString().substring(0,10);
+        let appTime = finalDate.toISOString().substring(11,19);
+
+        let date_el = document.getElementById("date-modal");
+        let time_el = document.getElementById("time-modal");
+        date_el.value = appDate;
+        time_el.value = appTime;
+        date_el.innerHTML = appDate;
+        time_el.innerHTML = appTime.substring(0,5);
+
+        var inst = M.Modal.getInstance(document.getElementById("modal"));
+        inst.open();
+    }
 }
 
-// function makeApp(e){
-//
-//     setTime(e);
-//
-//     let someDate = document.getElementsByClassName('datepicker')[0];
-//     let instance = M.Datepicker.getInstance(someDate);
-//     let idate = instance.date;
-//
-//     let finalDate = new Date(idate.getFullYear(),
-//         idate.getMonth(),
-//         idate.getDate(),
-//         e.target.dataset.time.substring(0,2));
-//     console.log(finalDate);
-//     finalDate.setHours(finalDate.getHours()+3);
-//
-//     let master_id = document.getElementById("master_id").value;
-//     let appDate = finalDate.toISOString().substring(0,10);
-//     let appTime = finalDate.toISOString().substring(11,19);
-//     let serviceName = document.getElementById('select-service').M_FormSelect.input.value;
-//     let serviceElement = document.getElementById(serviceName);
-//     if(serviceElement == null){
-//         console.log(true);
-//         document.getElementById("select_label").style.color = "red";
-//
-//     } else{
-//
-//         let serviceId = serviceElement.value;
-//
-//         console.log(master_id);
-//         console.log(appDate);
-//         console.log(appTime);
-//         console.log(serviceId);
-//
-//         fetch(`http://localhost:8888/app/create_appointment?masterId=${master_id}&appDate=${appDate}&appTime=${appTime}&serviceId=${serviceId}`)
-//             .then(data => {
-//                 document.getElementById(appTime.substring(0,5)).setAttribute("class","btn-black btn-disabled");
-//             })
-//             .catch(e => console.log(e));
-//     }
-// }
+function makeApp(e){
+
+    let master_id = document.getElementById("master_id").value;
+
+    let serviceName = document.getElementById('select-service').M_FormSelect.input.value;
+    let serviceElement = document.getElementById(serviceName);
+    if(serviceElement == null){
+        console.log(true);
+        document.getElementById("select_label").style.color = "red";
+
+    } else{
+
+        let serviceId = serviceElement.value;
+        let appDate = document.getElementById("date-modal").value;
+        let appTime = document.getElementById("time-modal").value;
+
+        console.log(master_id);
+        console.log(appDate);
+        console.log(appTime);
+        console.log(serviceId);
+
+        fetch(`http://localhost:8888/app/create_appointment?masterId=${master_id}&appDate=${appDate}&appTime=${appTime}&serviceId=${serviceId}`)
+            .then(data => {
+                document.getElementById(appTime.substring(0,5)).setAttribute("class","btn-black btn-disabled");
+            })
+            .catch(e => console.log(e));
+    }
+}

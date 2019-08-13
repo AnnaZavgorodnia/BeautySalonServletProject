@@ -6,20 +6,23 @@ import java.util.List;
 public class Service {
     private Long id;
     private String name;
+    private String nameUa;
     private Integer price;
     private List<Master> masters = new ArrayList<>();
     private List<Appointment> appointments = new ArrayList<>();
 
     public Service(){}
 
-    public Service(Long id, String name, Integer price) {
+    public Service(Long id, String name, String nameUa, Integer price) {
         this.id = id;
         this.name = name;
+        this.nameUa = nameUa;
         this.price = price;
     }
 
-    public Service(String name, Integer price) {
+    public Service(String name, String nameUa, Integer price) {
         this.name = name;
+        this.nameUa = nameUa;
         this.price = price;
     }
 
@@ -65,5 +68,13 @@ public class Service {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public String getNameUa() {
+        return nameUa;
+    }
+
+    public void setNameUa(String nameUa) {
+        this.nameUa = nameUa;
     }
 }

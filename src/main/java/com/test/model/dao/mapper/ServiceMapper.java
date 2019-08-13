@@ -12,6 +12,7 @@ public class ServiceMapper implements ObjectMapper<Service>{
         Service service = new Service();
         service.setId(rs.getLong("s_id"));
         service.setName(rs.getString("s_name"));
+        service.setNameUa(rs.getString("s_name_ua"));
         service.setPrice(rs.getInt("s_price"));
         return service;
     }

@@ -1,5 +1,6 @@
 package com.test.controller.command;
 
+import com.test.model.entity.Client;
 import com.test.model.entity.Role;
 import com.test.model.entity.User;
 import com.test.model.exception.UserAlreadyExistsException;
@@ -33,18 +34,18 @@ public class RegistrationCommand implements Command {
             return "/WEB-INF/views/registrationView.jsp";
         }
 
-        if(!RegistrationUtils.checkIfValid(
+        if(!RegistrationUtils.checkIfValidUser(
                 request, username, firstName,
-                lastName, email, password, null)){
+                lastName, email, password)){
 
             RegistrationUtils.setUserAttributes(request, username, firstName,
-                    lastName, email, password, null);
+                    lastName, email, password);
 
             return "/WEB-INF/views/registrationView.jsp";
 
         }
 
-        User user = new User();
+        User user = new Client();
 
         user.setUsername(username);
         user.setFullName(firstName + " " + lastName);
@@ -57,7 +58,7 @@ public class RegistrationCommand implements Command {
         } catch (UserAlreadyExistsException e){
             request.setAttribute("userExistsError"," ");
             RegistrationUtils.setUserAttributes(request, username, firstName,
-                    lastName, email, password, null);
+                    lastName, email, password);
             return "/WEB-INF/views/registrationView.jsp";
         }
 

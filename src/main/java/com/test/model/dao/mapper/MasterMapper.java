@@ -21,6 +21,7 @@ public class MasterMapper implements ObjectMapper<Master>{
         master.setPosition(Position.valueOf(rs.getString("m_position")));
         master.setInstagram(rs.getString("m_instagram"));
         master.setImagePath(rs.getString("m_image_path"));
+        master.setFullNameUa(rs.getString("m_full_name_ua"));
         return master;
     }
 
