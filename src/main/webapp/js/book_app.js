@@ -71,8 +71,7 @@ function createSchedule(time, data){
     title.innerHTML = time;
     let btn = document.createElement("button");
     btn.addEventListener("click", fullModal);
-    //todo
-    btn.innerHTML = "book";
+    btn.innerHTML = document.getElementById("time-table").dataset.book;
     btn.setAttribute("class","btn-black btn-active modal-trigger");
     btn.setAttribute("id",time);
     btn.dataset.time = time;

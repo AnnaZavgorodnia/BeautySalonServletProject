@@ -54,7 +54,7 @@
                         <fmt:message key="create.appointment.date"/>
                     </label>
                     <input type="text" id="date" class="datepicker">
-                    <div class="create__app__time" id="time-table">
+                    <div class="create__app__time" id="time-table" data-book="<fmt:message key="create.appointment.button.master"/>">
                     </div>
                 </div>
             </div>
