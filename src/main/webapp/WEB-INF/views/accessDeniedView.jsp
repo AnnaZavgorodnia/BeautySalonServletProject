@@ -29,5 +29,7 @@
             </a>
         </div>
     </div>
+
+    <script src="${pageContext.request.contextPath}/js/language.js"></script>
 </body>
 </html>

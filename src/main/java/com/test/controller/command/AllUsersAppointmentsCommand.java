@@ -21,7 +21,7 @@ public class AllUsersAppointmentsCommand implements Command {
         User user = (User)request.getSession().getAttribute("loginedUser");
         List<Appointment> appointments = appointmentService.getAllAppointmentsByClientOrMaster_Username(user.getUsername(), user.getRole());
         request.setAttribute("appointments", appointments);
-        request.setAttribute("module", "my_appointments");
+        request.setAttribute("module", "my_account");
         return "/WEB-INF/views/user_apps.jsp";
     }
 }

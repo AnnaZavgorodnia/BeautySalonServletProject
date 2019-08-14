@@ -24,18 +24,21 @@ public class SecurityConfig {
                 "create_appointment",
                 "create_app",
                 "api/appointments",
-                "me/appointments/delete"));
+                "me/appointments/delete",
+                "me/account"));
 
         securedRoutes.put(Role.ADMIN, Arrays.asList(
                 "all_appointments",
                 "api/appointments",
                 "create_master",
                 "add_master",
-                "all_masters"));
+                "all_masters",
+                "me/account"));
 
         securedRoutes.put(Role.MASTER, Arrays.asList(
                 "all_appointments",
-                "api/appointments"));
+                "api/appointments",
+                "me/account"));
     }
 
     public static List<String> getSecuredRoutesForRole(Role role){

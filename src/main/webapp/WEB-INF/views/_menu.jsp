@@ -51,8 +51,9 @@
                         </li>
                     </c:if>
                     <c:if test="${not empty loginedUser}">
-                        <li class="${module eq 'my_appointments' ? 'nav__link active': 'nav__link'}">
-                            <span class="nav__sublink"><fmt:message key="header.menu.account"/></span>
+                        <li class="${module eq 'my_account' ? 'nav__link active': 'nav__link'}">
+                            <a class="nav__sublink"
+                               href="${pageContext.request.contextPath}/app/me/account"><fmt:message key="header.menu.account"/></a>
                             <ul class="nav__drop__menu">
                                 <c:if test="${not empty loginedUser && loginedUser.role == 'CLIENT'}">
                                     <li>

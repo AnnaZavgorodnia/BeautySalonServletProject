@@ -435,7 +435,7 @@ nav{
 /* services-top */
 
 .top{
-    background: url("/images/services.jpg") center;
+    background: url(/images/services.jpg) center;
     background-size: cover;
     height: 100px;
 }
@@ -443,7 +443,7 @@ nav{
 /* login and register forms */
 
 .form__intro{
-    background-image: url("/images/1.jpg");
+    background-image: url(/images/1.jpg);
     background-repeat: no-repeat;;
     background-size: cover;
     background-attachment: fixed;
