@@ -6,6 +6,8 @@ import com.test.model.service.AppointmentService;
 import com.test.model.service.MasterService;
 import com.test.model.service.SalonServicesService;
 import com.test.model.service.UserService;
+import com.test.utils.SecurityUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -22,6 +24,8 @@ import java.util.Map;
 @WebServlet({ "/app/*" })
 @MultipartConfig
 public class Servlet extends HttpServlet {
+
+    private static final Logger logger = Logger.getLogger(Servlet.class);
 
     private Map<String, Command> commands = new HashMap<>();
 
@@ -43,7 +47,7 @@ public class Servlet extends HttpServlet {
         commands.put("api/all_appointments", new AllAppointmentsApiCommand(new AppointmentService()));
         commands.put("registration", new RegistrationCommand(new UserService()));
         commands.put("api/appointments", new MasterAppointmentsApiCommand(new AppointmentService()));
-        commands.put("create_appointment", new CreateAppointmentCommand(new AppointmentService()));
+        commands.put("api/create_appointment", new CreateAppointmentCommand(new AppointmentService()));
         commands.put("add_master", new CreateMasterCommand(new MasterService(), new SalonServicesService()));
         commands.put("me/appointments/delete", new DeleteClientAppointment(new AppointmentService()));
         commands.put("all_masters", new AllMastersAdminCommand(new MasterService()));
@@ -69,8 +73,10 @@ public class Servlet extends HttpServlet {
         if(path.contains("api")) {
             response.getWriter().write(page);
         } else if (page.contains("redirect")) {
+            logger.info("redirecting to -> " + page);
             response.sendRedirect(page.replace("redirect:", ""));
         } else {
+            logger.info("forwarding to -> " + page);
             request.getRequestDispatcher(request.getContextPath() + page).forward(request, response);
         }
     }

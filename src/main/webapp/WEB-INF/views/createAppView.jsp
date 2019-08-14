@@ -81,8 +81,23 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="modal-close waves-effect waves-red btn-flat">Cancel</button>
-            <button type="button" id="button-book" class="modal-close waves-effect waves-green btn-flat">Book</button>
+            <button type="button" class="modal-close waves-effect waves-red btn-flat">
+                <fmt:message key="button.cancel"/>
+            </button>
+            <button type="button" id="button-book" class="modal-close waves-effect waves-green btn-flat">
+                <fmt:message key="create.appointment.button.master"/>
+            </button>
+        </div>
+    </div>
+
+    <div id="modal-exists" class="modal" style="width: 40%">
+        <div class="modal-content">
+            <h3><fmt:message key="create.appointment.exists"/></h3>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="modal-close waves-effect waves-red btn-flat">
+                <fmt:message key="button.ok"/>
+            </button>
         </div>
     </div>
 

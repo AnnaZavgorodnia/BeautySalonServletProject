@@ -8,10 +8,8 @@ public class RegistrationUtils {
     private static String USERNAME_REGEX = "^[a-zA-Z0-9._-]{4,}$";
     private static String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[a-z]{2,6}$";
     private static String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,}$";
-    private static String FIRST_NAME_REGEX = "[A-Z][a-z]*";
-    private static String LAST_NAME_REGEX = "[A-Z][a-z]*";
-    private static String FIRST_NAME_UA_REGEX = "[А-ЩЬЮЯЇІЄҐ][а-щьюяїієґ]*";
-    private static String LAST_NAME_UA_REGEX = "[А-ЩЬЮЯЇІЄҐ][а-щьюяїієґ']*";
+    private static String NAME_REGEX = "[A-Z][a-z]*";
+    private static String NAME_UA_REGEX = "[А-ЩЬЮЯЇІЄҐ][а-щьюяїієґ]*";
 
     public static boolean checkIfValidUser(
             HttpServletRequest request, String username,
@@ -84,7 +82,7 @@ public class RegistrationUtils {
     }
 
     private static boolean checkFirstNameEn(HttpServletRequest request, String firstName){
-        if(firstName.trim().isEmpty() || !firstName.matches(FIRST_NAME_REGEX)){
+        if(firstName.trim().isEmpty() || !firstName.matches(NAME_REGEX)){
             request.setAttribute("firstNameError"," ");
             return false;
         }
@@ -92,7 +90,7 @@ public class RegistrationUtils {
     }
 
     private static boolean checkLastNameEn(HttpServletRequest request, String lastName){
-        if(lastName.trim().isEmpty() || !lastName.matches(LAST_NAME_REGEX)){
+        if(lastName.trim().isEmpty() || !lastName.matches(NAME_REGEX)){
             request.setAttribute("lastNameError"," ");
             return false;
         }
@@ -100,7 +98,7 @@ public class RegistrationUtils {
     }
 
     private static boolean checkFirstNameUa(HttpServletRequest request, String firstNameUa){
-        if(firstNameUa.trim().isEmpty() || !firstNameUa.matches(FIRST_NAME_UA_REGEX)){
+        if(firstNameUa.trim().isEmpty() || !firstNameUa.matches(NAME_UA_REGEX)){
             request.setAttribute("firstNameUaError"," ");
             return false;
         }
@@ -108,7 +106,7 @@ public class RegistrationUtils {
     }
 
     private static boolean checkLastNameUa(HttpServletRequest request, String lastNameUa){
-        if(lastNameUa.trim().isEmpty() || !lastNameUa.matches(LAST_NAME_UA_REGEX)){
+        if(lastNameUa.trim().isEmpty() || !lastNameUa.matches(NAME_UA_REGEX)){
             request.setAttribute("lastNameUaError"," ");
             return false;
         }

@@ -1,14 +1,17 @@
 package com.test.controller.listener;
 
-import com.test.model.entity.User;
-import com.test.utils.AppUtils;
 import com.test.utils.SecurityUtils;
+import org.apache.log4j.Logger;
 
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import java.util.HashSet;
 
+@WebListener
 public class SessionListener implements HttpSessionListener {
+
+    private static final Logger logger = Logger.getLogger(SessionListener.class);
+
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 
@@ -16,6 +19,7 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+        logger.info("destroying session");
         SecurityUtils.logoutUser(httpSessionEvent.getSession());
     }
 }

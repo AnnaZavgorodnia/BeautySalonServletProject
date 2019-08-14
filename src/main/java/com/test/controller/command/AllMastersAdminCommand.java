@@ -1,6 +1,7 @@
 package com.test.controller.command;
 
 import com.test.model.service.MasterService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 

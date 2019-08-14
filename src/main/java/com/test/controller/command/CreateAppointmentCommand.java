@@ -2,19 +2,18 @@ package com.test.controller.command;
 
 import com.google.gson.Gson;
 import com.test.model.entity.*;
+import com.test.model.exception.NotUniqueEntity;
 import com.test.model.service.AppointmentService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CreateAppointmentCommand implements Command {
 
     private final AppointmentService appointmentService;
+    private static final Logger logger = Logger.getLogger(CreateAppointmentCommand.class);
 
     public CreateAppointmentCommand(AppointmentService appointmentService) {
         this.appointmentService = appointmentService;
@@ -50,10 +49,18 @@ public class CreateAppointmentCommand implements Command {
             app.setMaster(master);
             app.setService(service);
 
-            appointmentService.create(app);
+            try {
+                appointmentService.create(app);
+            } catch (NotUniqueEntity e){
+                logger.info("duplicate value for appointment -> returning error message");
+                return "{\"errorMessage\":\"appointment already exists\"}";
+            }
 
+            logger.info("appointment created successfully -> returning created value");
             return new Gson().toJson(app);
         }
+
+        logger.info("invalid data in createAppointment -> returning error message");
         return "{\"errorMessage\":\"data is not valid\"}";
     }
 }

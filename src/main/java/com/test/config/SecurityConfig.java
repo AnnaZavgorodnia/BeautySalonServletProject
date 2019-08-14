@@ -1,11 +1,13 @@
 package com.test.config;
 
 import com.test.model.entity.Role;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
 public class SecurityConfig {
 
+    private static final Logger logger = Logger.getLogger(SecurityConfig.class);
     private static final Map<Role, List<String>> securedRoutes = new HashMap<>();
 
     static {
@@ -13,6 +15,8 @@ public class SecurityConfig {
     }
 
     private static void init() {
+
+        logger.info("initializing sercurity paths");
 
         securedRoutes.put(Role.CLIENT, Arrays.asList(
                 "masters",

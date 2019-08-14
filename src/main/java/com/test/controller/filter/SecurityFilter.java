@@ -3,6 +3,7 @@ package com.test.controller.filter;
 import com.test.model.entity.User;
 import com.test.utils.AppUtils;
 import com.test.utils.SecurityUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,6 +13,8 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class SecurityFilter implements Filter {
+
+    private static final Logger logger = Logger.getLogger(SecurityFilter.class);
 
     public SecurityFilter() {
     }
@@ -43,6 +46,8 @@ public class SecurityFilter implements Filter {
             }
 
             if (!SecurityUtils.hasPermission(path, loginedUser.getRole())) {
+
+                logger.info("access denied to user " + loginedUser.getUsername());
 
                 RequestDispatcher dispatcher
                         = request.getServletContext().getRequestDispatcher("/WEB-INF/views/accessDeniedView.jsp");

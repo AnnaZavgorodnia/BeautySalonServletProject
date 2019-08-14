@@ -4,11 +4,12 @@ import com.test.model.entity.Master;
 import com.test.model.entity.Position;
 import com.test.model.entity.Role;
 import com.test.model.entity.Service;
-import com.test.model.exception.UserAlreadyExistsException;
+import com.test.model.exception.NotUniqueEntity;
 import com.test.model.service.MasterService;
 import com.test.model.service.SalonServicesService;
 import com.test.utils.RegistrationUtils;
 import com.test.utils.SecurityUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class CreateMasterCommand implements Command {
 
     private final MasterService masterService;
     private final SalonServicesService servicesService;
+    private static final Logger logger = Logger.getLogger(CreateMasterCommand.class);
 
     public CreateMasterCommand(MasterService masterService, SalonServicesService servicesService) {
         this.servicesService = servicesService;
@@ -59,6 +61,8 @@ public class CreateMasterCommand implements Command {
         if(username == null || firstName == null || lastName == null ||
                 password == null || instagram == null || email == null ||
                 position == null || selected == null){
+
+            logger.info("returning createMaster page");
             return "/WEB-INF/views/createMasterView.jsp";
         }
 
@@ -77,6 +81,7 @@ public class CreateMasterCommand implements Command {
             RegistrationUtils.setMasterAttributes(request, username, firstName,
                     lastName, email, password, instagram, firstNameUa, lastNameUa);
 
+            logger.info("invalid data in createMaster -> returning createMaster page");
             return "/WEB-INF/views/createMasterView.jsp";
 
         }
@@ -103,15 +108,18 @@ public class CreateMasterCommand implements Command {
 
         try{
             masterService.create(master);
-        } catch (UserAlreadyExistsException e){
+        } catch (NotUniqueEntity e){
             request.setAttribute("userExistsError"," ");
             RegistrationUtils.setMasterAttributes(request, username, firstName,
                     lastName, email, password, instagram, firstNameUa, lastNameUa);
+
+            logger.info("duplicate value for master entity -> returning createMaster page");
             return "/WEB-INF/views/createMasterView.jsp";
         }
 
         saveImage(request, imagePath, filePart);
 
+        logger.info("master created successfully -> redirecting to allMasters page");
         return "redirect:/app/all_masters";
     }
 

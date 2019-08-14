@@ -3,6 +3,7 @@ package com.test.model.dao.impl;
 import com.test.model.dao.ServiceDao;
 import com.test.model.dao.mapper.ServiceMapper;
 import com.test.model.entity.Service;
+import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -22,6 +23,8 @@ public class JDBCServiceDao implements ServiceDao {
     private Connection connection;
     private String FIND_ALL_SERVICES;
 
+    private static final Logger logger = Logger.getLogger(JDBCServiceDao.class);
+
 
     JDBCServiceDao(Connection connection) {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(QUERY_PROPERTIES_FILE_PATH)){
@@ -31,6 +34,7 @@ public class JDBCServiceDao implements ServiceDao {
             FIND_ALL_SERVICES = prop.getProperty(FIND_ALL_SERVICES_PROP_NAME);
 
         } catch (Exception e) {
+            logger.error("error while reading properties", e);
             e.printStackTrace();
         }
         this.connection = connection;
@@ -38,7 +42,7 @@ public class JDBCServiceDao implements ServiceDao {
 
     @Override
     public void create(Service entity) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -62,19 +66,19 @@ public class JDBCServiceDao implements ServiceDao {
             }
             return services;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding services", e);
             return new ArrayList<>();
         }
     }
 
     @Override
     public void update(Service entity) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(Long id) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -82,6 +86,7 @@ public class JDBCServiceDao implements ServiceDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("error while closing connection", e);
             throw new RuntimeException(e);
         }
     }

@@ -4,6 +4,7 @@ import com.test.model.entity.User;
 import com.test.model.service.UserService;
 import com.test.utils.AppUtils;
 import com.test.utils.SecurityUtils;
+import org.apache.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class LoginCommand implements Command  {
 
     private final UserService userService;
+    private static final Logger logger = Logger.getLogger(LoginCommand.class);
 
     private final String USER_ALREADY_LOGGINED_ERROR = "login.page.error.already.loggined";
     private final String WRONG_USERNAME_OR_PASSWORD_ERROR = "login.page.error.wrong.input";
@@ -32,11 +34,15 @@ public class LoginCommand implements Command  {
             if(request.getParameter("logout") != null) {
                 request.setAttribute("logout", "logout");
             }
+
+            logger.info("returning logout page");
             return "/WEB-INF/views/loginView.jsp";
         }
 
         if(SecurityUtils.checkUserIsLogged(request, username)){
             request.setAttribute("errorMessage", USER_ALREADY_LOGGINED_ERROR);
+
+            logger.info("user already loggined -> returning login page");
             return "/WEB-INF/views/loginView.jsp";
         }
 
@@ -46,12 +52,14 @@ public class LoginCommand implements Command  {
 
             request.setAttribute("errorMessage", WRONG_USERNAME_OR_PASSWORD_ERROR);
 
+            logger.info("login - wrong credentials -> returning login page");
             return "/WEB-INF/views/loginView.jsp";
         }
 
 
         AppUtils.storeLoginedUser(request.getSession(), user.get());
 
+        logger.info("user successfully loggined -> redirecting to home page");
         return "redirect:/app/home";
     }
 }

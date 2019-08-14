@@ -3,7 +3,8 @@ package com.test.model.dao.impl;
 import com.test.model.dao.UserDao;
 import com.test.model.dao.mapper.UserMapper;
 import com.test.model.entity.User;
-import com.test.model.exception.UserAlreadyExistsException;
+import com.test.model.exception.NotUniqueEntity;
+import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -17,6 +18,8 @@ import static com.test.model.dao.impl.QueryConstants.*;
 public class JDBCUserDao implements UserDao {
 
     private Connection connection;
+
+    private static final Logger logger = Logger.getLogger(JDBCUserDao.class);
 
     private String FIND_USER_BY_USERNAME;
     private String FIND_ALL_USERS;
@@ -34,6 +37,7 @@ public class JDBCUserDao implements UserDao {
             INSERT_CLIENT = prop.getProperty(INSERT_CLIENT_PROP_NAME);
 
         } catch (Exception e) {
+            logger.error("error while reading properties", e);
             e.printStackTrace();
         }
 
@@ -57,7 +61,7 @@ public class JDBCUserDao implements UserDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding user by username", e);
             return Optional.empty();
         }
     }
@@ -99,19 +103,19 @@ public class JDBCUserDao implements UserDao {
             connection.commit();
 
         } catch (SQLIntegrityConstraintViolationException e){
-            e.printStackTrace();
+            logger.error("error while creating user", e);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                logger.error("error while connection rollback", ex);
             }
-            throw new UserAlreadyExistsException(e);
+            throw new NotUniqueEntity(e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while creating user", e);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                logger.error("error while connection rollback", ex);
             }
             throw new RuntimeException(e);
         }
@@ -138,19 +142,19 @@ public class JDBCUserDao implements UserDao {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding users", e);
             return new ArrayList<>();
         }
     }
 
     @Override
     public void update(User entity) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(Long id) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -158,6 +162,7 @@ public class JDBCUserDao implements UserDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("error while closing connection", e);
             throw new RuntimeException(e);
         }
     }

@@ -25,6 +25,11 @@
 <!--    <location>/jsp/error.jsp</location>-->
 <!--  </error-page>-->
 
+  <context-param>
+    <param-name>log4j-config-location</param-name>
+    <param-value>log4j.properties</param-value>
+  </context-param>
+
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

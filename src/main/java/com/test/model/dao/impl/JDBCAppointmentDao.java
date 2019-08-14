@@ -3,6 +3,8 @@ package com.test.model.dao.impl;
 import com.test.model.dao.AppointmentDao;
 import com.test.model.dao.mapper.*;
 import com.test.model.entity.*;
+import com.test.model.exception.NotUniqueEntity;
+import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -14,6 +16,8 @@ import static com.test.model.dao.impl.QueryConstants.*;
 public class JDBCAppointmentDao implements AppointmentDao {
 
     private Connection connection;
+
+    private static final Logger logger = Logger.getLogger(JDBCAppointmentDao.class);
 
     private String FIND_APPOINTMENTS_BY_CLIENT_USERNAME;
     private String DELETE_APPOINTMENT_BY_ID;
@@ -36,6 +40,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
             INSERT_APPOINTMENT = prop.getProperty(INSERT_APPOINTMENT_PROP_NAME);
 
         } catch (Exception e) {
+            logger.error("error while reading properties", e);
             e.printStackTrace();
         }
         this.connection = connection;
@@ -56,7 +61,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
             return extractListAppointments(rs);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding appointments", e);
             return new ArrayList<>();
         }
     }
@@ -78,8 +83,12 @@ public class JDBCAppointmentDao implements AppointmentDao {
                 throw new SQLException("Creating appointment failed, no rows affected.");
             }
 
+        }catch (SQLIntegrityConstraintViolationException e){
+            logger.warn("appointment duplicate value " + entity);
+            throw new NotUniqueEntity(e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while creating appointment", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -106,7 +115,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
             return apps;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding appointment", e);
             return new ArrayList<>();
         }
     }
@@ -124,14 +133,14 @@ public class JDBCAppointmentDao implements AppointmentDao {
             return extractListAppointments(rs);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding appointment", e);
             return new ArrayList<>();
         }
     }
 
     @Override
     public void update(Appointment entity) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -142,7 +151,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while deleting appointment", e);
         }
     }
 
@@ -151,6 +160,7 @@ public class JDBCAppointmentDao implements AppointmentDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("error while closing connection", e);
             throw new RuntimeException(e);
         }
     }
@@ -184,9 +194,5 @@ public class JDBCAppointmentDao implements AppointmentDao {
         }
 
         return apps;
-    }
-
-    private Appointment extractAppointment(ResultSet rs){
-        return null;
     }
 }

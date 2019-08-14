@@ -2,10 +2,12 @@ package com.test.controller.command;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.test.config.SecurityConfig;
 import com.test.model.entity.Appointment;
 import com.test.model.entity.Role;
 import com.test.model.entity.User;
 import com.test.model.service.AppointmentService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

@@ -5,7 +5,8 @@ import com.test.model.dao.mapper.MasterMapper;
 import com.test.model.dao.mapper.ServiceMapper;
 import com.test.model.entity.Master;
 import com.test.model.entity.Service;
-import com.test.model.exception.UserAlreadyExistsException;
+import com.test.model.exception.NotUniqueEntity;
+import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.sql.*;
@@ -16,6 +17,8 @@ import static com.test.model.dao.impl.QueryConstants.*;
 public class JDBCMasterDao implements MasterDao {
 
     private Connection connection;
+
+    private static final Logger logger = Logger.getLogger(JDBCMasterDao.class);
 
     private String FIND_ALL_MASTERS;
     private String FIND_MASTER_BY_ID;
@@ -36,6 +39,7 @@ public class JDBCMasterDao implements MasterDao {
             INSERT_MASTER_SERVICE = prop.getProperty(INSERT_MASTER_SERVICE_PROP_NAME);
 
         } catch (Exception e) {
+            logger.error("error while reading properties", e);
             e.printStackTrace();
         }
         this.connection = connection;
@@ -93,19 +97,19 @@ public class JDBCMasterDao implements MasterDao {
             connection.commit();
 
         } catch (SQLIntegrityConstraintViolationException e){
-            e.printStackTrace();
+            logger.error("error while creating master", e);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                logger.error("error while connection rollback", e);
             }
-            throw new UserAlreadyExistsException(e);
+            throw new NotUniqueEntity(e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while creating master", e);
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                logger.error("error while connection rollback", e);
             }
             throw new RuntimeException(e);
         }
@@ -144,7 +148,7 @@ public class JDBCMasterDao implements MasterDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding master", e);
             return Optional.empty();
         }
     }
@@ -165,19 +169,19 @@ public class JDBCMasterDao implements MasterDao {
             }
             return masters;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("error while finding masters", e);
             return null;
         }
     }
 
     @Override
     public void update(Master entity) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(Long id) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -185,6 +189,7 @@ public class JDBCMasterDao implements MasterDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("error while closing connection", e);
             throw new RuntimeException(e);
         }
     }

@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let elems = document.querySelectorAll('select');
     let instances = M.FormSelect.init(elems,{});
 
-    var elems_modal = document.querySelectorAll('.modal');
-    var instances_modal = M.Modal.init(elems_modal,{startingTop: "4%",endingTop: "30%"});
+    let elems_modal = document.querySelectorAll('.modal');
+    let instances_modal = M.Modal.init(elems_modal,{startingTop: "4%",endingTop: "30%"});
 
     document.getElementById("select-service").addEventListener("change",function(e){
         console.log(e.target);
@@ -151,8 +151,15 @@ function makeApp(e){
         console.log(appTime);
         console.log(serviceId);
 
-        fetch(`http://localhost:8888/app/create_appointment?masterId=${master_id}&appDate=${appDate}&appTime=${appTime}&serviceId=${serviceId}`)
+        fetch(`http://localhost:8888/app/api/create_appointment?masterId=${master_id}&appDate=${appDate}&appTime=${appTime}&serviceId=${serviceId}`)
+            .then(data => data.json())
             .then(data => {
+                console.log(data);
+                if(data.errorMessage){
+                    console.log(data.errorMessage);
+                    let instance = M.Modal.getInstance(document.getElementById("modal-exists"));
+                    instance.open();
+                }
                 document.getElementById(appTime.substring(0,5)).setAttribute("class","btn-black btn-disabled");
             })
             .catch(e => console.log(e));

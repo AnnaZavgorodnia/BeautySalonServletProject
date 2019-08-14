@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.test.model.entity.Appointment;
 import com.test.model.entity.Role;
 import com.test.model.entity.User;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class AllAppointmentsPageCommand implements Command  {
+
     @Override
     public String execute(HttpServletRequest request) {
         request.setAttribute("module", "all_appointments");
