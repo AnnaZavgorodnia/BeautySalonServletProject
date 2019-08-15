@@ -22,7 +22,7 @@
                 <img src="${pageContext.request.contextPath}/masters/${image}" alt="avatar">
             </c:if>
             <c:if test="${empty image}">
-                <img src="${pageContext.request.contextPath}/images/masters/default.jpg" alt="avatar">
+                <img src="${pageContext.request.contextPath}/images/default.jpg" alt="avatar">
             </c:if>
         </div>
         <div class="content">
